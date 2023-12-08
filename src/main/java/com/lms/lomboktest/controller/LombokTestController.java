@@ -32,11 +32,14 @@ public class LombokTestController {
     @PostMapping("/postTest")
     public ModelAndView postTest(@ModelAttribute InputDto address){
         log.info("address : {}", address.getAddress());
+        // address 가져와서 등록
         List<Address> addressList = new ArrayList<>();
         addressList.add(Address.builder().address(address.getAddress()).build());
         addressRegistService.registAddress(addressList);
-
+        
+        // 등록된거 가져와서 보여주
         List<Address> addressList1 = addressRegistService.findAll();
+
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("output");
