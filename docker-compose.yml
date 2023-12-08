@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  address-test:
+    container_name: address-test
+    build:
+      dockerfile: Dockerfile
+      context: .
+    image: iamipro/address-test
+    ports:
+      - "8080:8080"
+    restart: always
