@@ -9,6 +9,4 @@ import java.util.Optional;
 
 public interface AddressResigerRepository extends JpaRepository<Address, Long> {
 
-        Optional<Address> findByAddress(String address);
-
 }
