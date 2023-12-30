@@ -6,16 +6,16 @@
 # CMD ["java", "-jar", "app.jar"]
 
 FROM ubuntu:22.04
-RUN mkdir -p /home/iamipro/java/cicd
-WORKDIR /home/iamipro/java/cicd
+RUN mkdir -p /app
+WORKDIR /app
 
 RUN apt-get update
 RUN apt-get install -y openjdk-17-jdk
 RUN apt-get install -y gradle
 # RUN git clone https://github.com/MyoungSoo7/cicd.git
-RUN ./gradlew clean build
-RUN cd /home/iamipro/java/cicd/build/libs
-RUN java -jar app.jar
+# RUN ./gradlew clean build
+# RUN cd /home/iamipro/java/cicd/build/libs
+# RUN java -jar app.jar
 
 
 
