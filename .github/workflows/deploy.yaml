@@ -40,15 +40,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Deploy to Cloudtype
-        uses: cloudtype-github-actions/deploy@v1
-        with:
-          token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          project: iamipro/pharm
-          stage: main
-          yaml: |
-            name: pharmacy-app
-            app: container
-            options:
-              ports: 8080
-              image: ${{ steps.meta.outputs.tags }}
+  
