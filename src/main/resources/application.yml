@@ -1,0 +1,122 @@
+spring:
+  profiles:
+    active: local  #default profile
+    group:
+      local:
+        - common
+      prod:
+        - common
+
+---
+spring:
+  config:
+    activate:
+      on-profile: common
+  thymeleaf:
+    cache: false
+
+#resilience4j:
+#  circuitbreaker:
+#    failure-rate-threshold: 10   # 실패 10% 이상 시 서킷 오픈
+#    slow-call-duration-threshold: 500   # 500ms 이상 소요 시 실패로 간주
+#    slow-call-rate-threshold: 10   # slowCallDurationThreshold 초과 비율이 10% 이상 시 서킷 오픈
+#    wait-duration-in-open-state: 30000   # OPEN -> HALF-OPEN 전환 전 기다리는 시간
+#    minimum-number-of-calls: 50   # 집계에 필요한 최소 호출 수
+#    sliding-window-size: 100   # 서킷 CLOSE 상태에서 N회 호출 도달 시 failureRateThreshold 실패 비율 계산
+#    permitted-number-of-calls-in-half-open-state: 30   # HALFOPEN -> CLOSE or OPEN 으로 판단하기 위해 호출 횟수
+#  retry:
+#    wait-duration: 100   # 재시도 사이 간격
+#    max-attempts: 2   # 재시도 횟수(최초 호출 포함)
+
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:  # 기본 config 명
+        registerHealthIndicator: true
+        # COUNT_BASED(마지막 N번의 호출 결과를 기반), TIME_BASED(마지막 N초의 결과를 기반) (호출 결과를 저장하고 집계하기 위해 slidingWindow 사용)
+        slidingWindowType: COUNT_BASED
+        # COUNT_BASED: array크기, TIME_BASED: 초
+        slidingWindowSize: 5
+        # circuit을 동작시키기위한 최소한의 call 수
+        minimumNumberOfCalls: 2
+        slowCallRateThreshold: 100
+        slowCallDurationThreshold: 60000
+        failureRateThreshold: 50 # 실패율 임계값(50%)
+        permittedNumberOfCallsInHalfOpenState: 3
+        # 서킷의 상태가 Open 에서 Half-open 으로 변경되기전에 Circuit Break가 기다리는 시간[s](HALF_OPEN 상태로 빨리 전환되어 장애가 복구 될 수 있도록)
+        waitDurationInOpenState: 20s
+    instances:
+      circuit-sample-common: # circuitbreaker name
+        baseConfig: default # 기본 config 지정
+      circuit-sample-3000:
+        baseConfig: default
+        slowCallDurationThreshold: 3000 # 응답시간이 느린것으로 판단할 기준 시간 [ms]
+
+
+naver:
+  client:
+    id: ${X_NAVER_CLIENT_ID}
+    secret: ${X_NAVER_CLIENT_SECRET}
+  url:
+    search:
+      local: https://openapi.naver.com/v1/search/local.json
+      image: https://openapi.naver.com/v1/search/image.json
+      blog: https://openapi.naver.com/v1/search/blog.json
+
+kakao:
+  rest:
+    api:
+      key: ${KAKAO_REST_API_KEY}
+
+
+server:
+  servlet:
+    encoding:
+      force-response: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql: trace
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/api?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/api?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    open-in-view: false
+
+
+
