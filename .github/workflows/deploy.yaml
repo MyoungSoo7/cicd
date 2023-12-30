@@ -67,5 +67,20 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Render ECS task-definition
+        id: render-task-definition
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: arn:aws:ecs:ap-northeast-2:383584590835:task-definition/hhplus-api-prod:1
+          container-name: service-prod
+          image: ${{ steps.build-image.outputs.image }}
+      
+      - name: Deploy Amazon ECS task-definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-task-definition.outputs.task-definition }}
+          cluster: cluster-hhplus-api-prod
+          service: hh
+          wait-for-service-stability: true
 
   
