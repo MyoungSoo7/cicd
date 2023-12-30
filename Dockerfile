@@ -11,7 +11,7 @@ RUN mkdir -p /home/iamipro/java/cicd
 WORKDIR /home/iamipro/java/cicd
 
 
-RUN sudo apt-get update
+RUN apt-get update
 RUN apt-get install -y openjdk-17-jdk
 RUN apt-get install -y gradle
 RUN git clone https://github.com/MyoungSoo7/cicd.git
