@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local  #default profile
+    active: prod  #default profile
     group:
       local:
         - common
@@ -106,7 +106,7 @@ spring:
       on-profile: prod
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/api?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/api?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
