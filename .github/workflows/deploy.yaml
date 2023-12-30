@@ -128,8 +128,8 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: cluster-hhplus-api-prod
-          cluster: hh
+          service: hh2
+          cluster: cluster-hhplus-api-prod
           wait-for-service-stability: false  
         
       # - name: Create prod environments
