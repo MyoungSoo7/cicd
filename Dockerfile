@@ -1,3 +1,7 @@
+FROM ubuntu:22.04
+RUN apt-get install -y openjdk-17-jdk
+RUN apt-get install -y mariadb-server
+
 FROM openjdk:17-slim
 WORKDIR /app
 COPY build/libs/app.jar /app/app.jar
@@ -5,7 +9,7 @@ COPY src/main/resources/application.yml /app/application.yml
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
 
-# FROM ubuntu:22.04
+
 # RUN mkdir -p /app
 # WORKDIR /app
 
