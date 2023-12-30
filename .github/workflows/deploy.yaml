@@ -120,7 +120,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: ./src/main/resources/task.json
+          task-definition: ./src/main/resources/properties/task.json
           container-name: service-prod
           image: ${{ steps.build-image.outputs.image }}
 
