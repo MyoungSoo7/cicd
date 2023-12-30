@@ -11,7 +11,7 @@ CMD ["java", "-jar", "app.jar"]
 
 # RUN apt-get update
 # RUN apt-get install -y openjdk-17-jdk
-RUN apt-get install -y gradle
+# RUN apt-get install -y gradle
 # RUN git clone https://github.com/MyoungSoo7/cicd.git
 # RUN ./gradlew clean build
 # RUN cd /home/iamipro/java/cicd/build/libs
