@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/hhplus-api-prod:2",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/hhplus-api-prod:latest",
     "containerDefinitions": [
         {
             "name": "service-prod",
-            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/test:latest",
+            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/test:sha-1e15f91",
             "cpu": 0,
             "portMappings": [
                 {
@@ -12,12 +12,20 @@
                     "hostPort": 8080,
                     "protocol": "tcp",
                     "appProtocol": "http"
+                },
+                {
+                    "name": "service-prod-3307-tcp",
+                    "containerPort": 3307,
+                    "hostPort": 3307,
+                    "protocol": "tcp"
                 }
             ],
             "essential": true,
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -25,7 +33,8 @@
                     "awslogs-group": "/ecs/hhplus-api-prod",
                     "awslogs-region": "ap-northeast-2",
                     "awslogs-stream-prefix": "ecs"
-                }
+                },
+                "secretOptions": []
             }
         }
     ],
@@ -33,7 +42,7 @@
     "taskRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "executionRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "networkMode": "awsvpc",
-    "revision": 2,
+    "revision": 8,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -79,7 +88,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-12-30T22:28:15.374Z",
-    "registeredBy": "arn:aws:iam::383584590835:user/cloudtype-ecr",
+    "registeredAt": "2023-12-30T22:47:07.171Z",
+    "registeredBy": "arn:aws:iam::383584590835:root",
     "tags": []
 }
