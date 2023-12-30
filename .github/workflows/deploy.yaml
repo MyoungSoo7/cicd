@@ -70,6 +70,7 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
   prod-cd:  
       runs-on: ubuntu-latest
       steps: 
@@ -105,6 +106,7 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --target=prod
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT    
+          
       - name: Render ECS task-definition
         id: render-task-definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
