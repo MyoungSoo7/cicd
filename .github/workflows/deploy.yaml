@@ -109,7 +109,7 @@ jobs:
         id: render-task-definition
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: arn:aws:ecs:ap-northeast-2:383584590835:task-definition/hhplus-api-prod:1
+          task-definition: .taskdefinition/prod-task-definition.json
           container-name: service-prod
           image: ${{ steps.build-image.outputs.image }}
       
