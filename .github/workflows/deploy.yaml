@@ -9,6 +9,7 @@ permissions:
   contents: read
   
 env:
+  AWS_REGION: ap-northeast-2
   ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   IMAGE_NAME: test
@@ -79,10 +80,10 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" >> .env.production
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.production
-          echo "CLOUDWATCH_REGION=${{ secrets.CLOUDWATCH_REGION }}" >> .env.production
-          echo "CLOUDWATCH_GROUP=${{ secrets.CLOUDWATCH_GROUP }}" >> .env.production
-          echo "CLOUDWATCH_STREAM_INFO=${{ secrets.CLOUDWATCH_STREAM_INFO }}" >> .env.production
-          echo "CLOUDWATCH_STREAM_ERROR=${{ secrets.CLOUDWATCH_STREAM_ERROR }}" >> .env.production    
+          # echo "CLOUDWATCH_REGION=${{ secrets.CLOUDWATCH_REGION }}" >> .env.production
+          # echo "CLOUDWATCH_GROUP=${{ secrets.CLOUDWATCH_GROUP }}" >> .env.production
+          # echo "CLOUDWATCH_STREAM_INFO=${{ secrets.CLOUDWATCH_STREAM_INFO }}" >> .env.production
+          # echo "CLOUDWATCH_STREAM_ERROR=${{ secrets.CLOUDWATCH_STREAM_ERROR }}" >> .env.production    
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
