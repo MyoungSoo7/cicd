@@ -112,9 +112,9 @@ jobs:
           REPOSITORY: test
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG . --target=prod
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-          echo "image=$REGISTRY/$REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker build -t $REGISTRY/$REPOSITORY:latest . --target=prod
+          docker push $REGISTRY/$REPOSITORY:latest
+          echo "image=$REGISTRY/$REPOSITORY:latest" >> $GITHUB_OUTPUT
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
