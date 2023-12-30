@@ -112,7 +112,7 @@ jobs:
           REPOSITORY: test
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:latest . --target=prod
+          docker build -t $REGISTRY/$REPOSITORY:latest .  
           docker push $REGISTRY/$REPOSITORY:latest
           echo "image=$REGISTRY/$REPOSITORY:latest" >> $GITHUB_OUTPUT
 
