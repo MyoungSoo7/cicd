@@ -39,7 +39,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
     implementation 'org.springframework.retry:spring-retry'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+
+    // build.gradle.kts
+    // 로그백 의존성
+
+
     // Thymeleaf (뷰 템플릿 엔진)
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation group: 'com.yahoo.vespa', name: 'document', version: '8.270.8'
