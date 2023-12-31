@@ -3,15 +3,15 @@ RUN sudo apt update
 RUN apt-get install -y openjdk-17-jdk
 RUN apt-get install -y mariadb-server
 
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://database-1:3306/api
-ENV SPRING_DATASOURCE_USERNAME=root
-ENV SPRING_DATASOURCE_PASSWORD=dlaaudtn1!
-ENV SPRING_PROFILES_ACTIVE=prod
-ENV KAKAO_REST_API_KEY=0c8e14fd07f2600795dcbfcc3aa816fa
-ENV X_NAVER_CLIENT_SECRET=LiZfsgtuD5
-ENV X_NAVER_CLIENT_ID=zdqMoIkFaK8uKvC2oNY2
+# ENV SPRING_DATASOURCE_URL=jdbc:mysql://database-1:3306/api
+# ENV SPRING_DATASOURCE_USERNAME=root
+# ENV SPRING_DATASOURCE_PASSWORD=
+# ENV SPRING_PROFILES_ACTIVE=prod
+# ENV KAKAO_REST_API_KEY=0c8e14fd07f2600795dcbfcc3aa816fa
+# ENV X_NAVER_CLIENT_SECRET=LiZfsgtuD5
+# ENV X_NAVER_CLIENT_ID=zdqMoIkFaK8uKvC2oNY2
 
-FROM openjdk:17-slim
+FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY build/libs/app.jar /app/app.jar
 COPY src/main/resources/application.yml /app/application.yml
