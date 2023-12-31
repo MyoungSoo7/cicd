@@ -1,43 +1,183 @@
-name: Create and publish a Docker image to AWS ECR, Deploy to Cloudtype
+name: Java CI with GradleCreate and publish a Docker image to AWS ECR 
 
 on:
   push:
     branches:
-      - master
+      - master 
 
+permissions:
+  contents: read
+  
 env:
+  AWS_REGION: ap-northeast-2
+  ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   IMAGE_NAME: test
-
-jobs:
-  build-and-push-image:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - name: Checkout repository
+  ECR_REPOSITORY: hhplus-prod
+  
+jobs: 
+          
+  prod-cd:
+      name: CD
+      runs-on: ubuntu-latest
+      # needs: build 
+      
+      steps: 
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
         with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Run chmod to make gradlew executable
+        run: chmod +x ./gradlew
+        
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v2.10.0
+        with:
+          arguments: build
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=sha
-      - name: Build and push Docker image
-        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        id: build-image
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: test
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:latest .  
+          docker push $REGISTRY/$REPOSITORY:latest
+          echo "image=$REGISTRY/$REPOSITORY:latest" >> $GITHUB_OUTPUT
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          task-definition: ./src/main/resources/properties/task.json
+          container-name: service-prod
+          image: ${{ steps.build-image.outputs.image }}
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: hh3
+          cluster: cluster-hhplus-api-prod
+          wait-for-service-stability: false  
+
+# build:
+
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - uses: actions/checkout@v3
+#     - name: Set up JDK 17
+#       uses: actions/setup-java@v3
+#       with:
+#         java-version: '17'
+#         distribution: 'temurin'
+#     - name: Run chmod to make gradlew executable
+#       run: chmod +x ./gradlew
+#     - name: Build with Gradle
+#       uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+#       with:
+#         arguments: build
+
+
+      # docker-build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - name: Build the Docker image
+  #     run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)        
+ 
+  # build-and-push-image:
+  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v3
+
+  #     - name: Log in to the Container registry
+  #       uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+  #       with:
+  #         registry: ${{ env.REGISTRY }}
+  #         username: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         password: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  #     - name: Extract metadata (tags, labels) for Docker
+  #       id: meta
+  #       uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+  #       with:
+  #         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+  #         tags: |
+  #           type=sha
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
+  #       with:
+  #         context: .
+  #         push: true
+  #         tags: ${{ steps.meta.outputs.tags }}
+  #         labels: ${{ steps.meta.outputs.labels }}    
+        
+      # - name: Create prod environments
+      #   run: |
+      #     echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" >> .env.production
+      #     echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.production
+      #     # echo "CLOUDWATCH_REGION=${{ secrets.CLOUDWATCH_REGION }}" >> .env.production
+      #     # echo "CLOUDWATCH_GROUP=${{ secrets.CLOUDWATCH_GROUP }}" >> .env.production
+      #     # echo "CLOUDWATCH_STREAM_INFO=${{ secrets.CLOUDWATCH_STREAM_INFO }}" >> .env.production
+      #     # echo "CLOUDWATCH_STREAM_ERROR=${{ secrets.CLOUDWATCH_STREAM_ERROR }}" >> .env.production    
+
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-region: ${{ env.AWS_REGION }}
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  
+      # - name: Login AWS ECR service
+      #   id: ecr-login
+      #   uses: aws-actions/amazon-ecr-login@v2
+      
+      # - name: Build, tag, and push dev-image to Amazon ECR
+      #   id: build-image
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+      #     IMAGE_TAG: prod-${{ github.sha }}
+      #   run: |
+      #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --target=prod
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      #     echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT    
+          
+      # - name: Render ECS task-definition
+      #   id: render-task-definition
+      #   uses: aws-actions/amazon-ecs-render-task-definition@v1
+      #   with:
+      #     task-definition: .taskdefinition/prod-task-definition.json
+      #     container-name: service-prod
+      #     image: ${{ steps.build-image.outputs.image }}
+      
+      # - name: Deploy Amazon ECS task-definition
+      #   uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      #   with:
+      #     task-definition: ${{ steps.render-task-definition.outputs.task-definition }}
+      #     cluster: cluster-hhplus-api-prod
+      #     service: hh
+      #     wait-for-service-stability: true
 
   
