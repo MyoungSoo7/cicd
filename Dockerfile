@@ -3,7 +3,7 @@ RUN sudo apt update
 RUN apt-get install -y openjdk-17-jdk
 RUN apt-get install -y mariadb-server
 
-ENV SPRING_DATASOURCE_URL=jdbc:mysql://database-1:3306/api
+ENV SPRING_DATASOURCE_URL=jdbc:mysql://database-2:3306/api
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=dlaaudtn1!
 ENV SPRING_PROFILES_ACTIVE=prod
