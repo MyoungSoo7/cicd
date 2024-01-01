@@ -39,7 +39,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
     implementation 'org.springframework.retry:spring-retry'
-    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    //implementation 'ch.qos.logback:logback-classic:1.2.3'
     implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
