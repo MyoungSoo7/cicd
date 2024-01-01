@@ -30,6 +30,10 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" >> .env
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "CLOUDWATCH_REGION=ap-northeast-2" >> .env.production
+          echo "CLOUDWATCH_GROUP=/ecs/hhplus-api-prod" >> .env
+         # echo "CLOUDWATCH_STREAM_INFO=info" >> .env
+         # echo "CLOUDWATCH_STREAM_ERROR=error" >> .env
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -50,7 +54,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+          aws-region: ap-northeast-2             
 
       - name: Login to Amazon ECR
         id: login-ecr
