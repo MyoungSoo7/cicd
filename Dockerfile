@@ -1,6 +1,5 @@
 FROM ubuntu:22.04
 RUN sudo apt update
-RUN apt install apache2
 RUN apt-get install -y openjdk-17-jdk
 RUN apt-get install -y mariadb-server
 
