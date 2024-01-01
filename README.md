@@ -14,4 +14,4 @@ spring-data-jpa <br>
 
 [테스트]<br>
 
-![image](https://github.com/MyoungSoo7/api/assets/13523622/5f8494c3-7ec5-42bc-97df-364631ad4b06)  <br>
+ 
