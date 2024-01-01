@@ -36,8 +36,7 @@ dependencies {
     implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
     implementation 'org.springframework.retry:spring-retry'
     //implementation 'ch.qos.logback:logback-classic:1.2.3'
-    //implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
-
+    implementation 'ca.pjer:logback-awslogs-appender:1.6.0'
 
     // Thymeleaf (뷰 템플릿 엔진)
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -50,12 +49,18 @@ dependencies {
     implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'    //
     implementation group: 'org.json', name: 'json', version: '20231013'
     implementation group: 'org.jsoup', name: 'jsoup', version: '1.16.1'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-  
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+
+  
+
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.boot:spring-boot-testcontainers'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
