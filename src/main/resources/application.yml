@@ -102,7 +102,7 @@ spring:
       on-profile: prod
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3307/api?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mariadb://database-1.c5aek8m6e48r.ap-northeast-2.rds.amazonaws.com:3307/api?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
     username: root
     password: dlaaudtn1!
   jpa:
