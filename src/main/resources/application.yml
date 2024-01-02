@@ -56,7 +56,7 @@ resilience4j:
 
 naver:
   client:
-    id: zdqMoIkFaK8uKvC2oNY2
+    id: ${X_NAVER_ID}
     secret: ${X_NAVER_CLIENT_SECRET}
   url:
     search:
