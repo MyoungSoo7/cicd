@@ -103,7 +103,7 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://database-2.c5aek8m6e48r.ap-northeast-2.rds.amazonaws.com:3307/api
-    username: root
+    username: ${DB_NAME}
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
