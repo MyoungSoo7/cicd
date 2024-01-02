@@ -57,7 +57,7 @@ resilience4j:
 naver:
   client:
     id: zdqMoIkFaK8uKvC2oNY2
-    secret: LiZfsgtuD5
+    secret: ${X_NAVER_CLIENT_SECRET}
   url:
     search:
       local: https://openapi.naver.com/v1/search/local.json
@@ -67,7 +67,7 @@ naver:
 kakao:
   rest:
     api:
-      key: 0c8e14fd07f2600795dcbfcc3aa816fa
+      key: ${KAKAO_REST_API_KEY}
 
 
 server:
@@ -104,7 +104,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://database-2.c5aek8m6e48r.ap-northeast-2.rds.amazonaws.com:3307/api
     username: root
-    password: qwerasdf
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: create
