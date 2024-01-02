@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local  #default profile
+    active: prod  #default profile
     group:
       local:
         - common
@@ -107,7 +107,7 @@ spring:
     password: qwerasdf
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
