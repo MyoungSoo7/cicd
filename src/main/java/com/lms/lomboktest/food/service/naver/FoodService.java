@@ -35,11 +35,7 @@ public class FoodService {
 
     @CircuitBreaker(name = "circuit-sample-3000", fallbackMethod = "searchFoodFallback")
     public SearchLocalRes localSearch(String query, String sort ) {
-        // 스레드 분리
-        Thread t1 = new Thread(() -> {
-            saveFoodKeyword(query);
-        });
-
+        saveFoodKeyword(query);
         long start = System.currentTimeMillis();
         try {
             Thread.sleep(5000L);

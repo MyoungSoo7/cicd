@@ -32,7 +32,7 @@
         <layout>
             <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </layout>
-        <logGroupName>coffee-shop_${profile}</logGroupName>
+        <logGroupName>/ecs/hhplus-api-prod</logGroupName>
         <logStreamUuidPrefix>error-</logStreamUuidPrefix>
         <logRegion>ap-northeast-2</logRegion>
         <maxBatchLogEvents>50</maxBatchLogEvents>
@@ -41,21 +41,21 @@
         <retentionTimeDays>0</retentionTimeDays>
     </appender>
 
-    <springProfile name="local">
-        <logger name="com.sample.coffeeshop" level="DEBUG" additivity="false">
-            <appender-ref ref="CONSOLE"/>
-        </logger>
-        <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
-        </root>
-    </springProfile>
+     <springProfile name="local">
+           <logger name="com.lms.lomboktest" level="DEBUG" additivity="false">
+               <appender-ref ref="CONSOLE"/>
+           </logger>
+           <root level="INFO">
+               <appender-ref ref="CONSOLE"/>
+           </root>
+       </springProfile>
 
-    <springProfile name="prod">
-        <property name="profile" value="prod"/>
-        <root level="INFO">
-            <appender-ref ref="ASYNC_AWS_LOGS"/>
-            <appender-ref ref="FILE"/>
-            <appender-ref ref="CONSOLE"/>
-        </root>
-    </springProfile>
+       <springProfile name="prod">
+           <property name="profile" value="prod"/>
+           <root level="INFO">
+               <appender-ref ref="ASYNC_AWS_LOGS"/>
+               <appender-ref ref="FILE"/>
+               <appender-ref ref="CONSOLE"/>
+           </root>
+       </springProfile>
 </configuration>
