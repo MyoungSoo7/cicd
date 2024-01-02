@@ -1,4 +1,4 @@
-name: Java CI with GradleCreate and publish a Docker image to AWS ECR 
+name: CD to AWS (ECR/ECS)
 
 on:
   push:
@@ -13,7 +13,6 @@ env:
   ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   IMAGE_NAME: test
-  ECR_REPOSITORY: hhplus-prod
   
 jobs: 
           
