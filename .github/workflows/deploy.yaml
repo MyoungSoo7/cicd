@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" >> .env
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
-          echo "CLOUDWATCH_REGION=ap-northeast-2" >> .env.production
+          echo "CLOUDWATCH_REGION=ap-northeast-2" >> .env
           echo "CLOUDWATCH_GROUP=/ecs/hhplus-api-prod" >> .env
          # echo "CLOUDWATCH_STREAM_INFO=info" >> .env
          # echo "CLOUDWATCH_STREAM_ERROR=error" >> .env
@@ -83,7 +83,7 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: hh6
+          service: hh7
           cluster: cluster-hhplus-api-prod
           wait-for-service-stability: false  
 
