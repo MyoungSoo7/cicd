@@ -1,9 +1,9 @@
-package com.lms.lomboktest.food.dto;
+package com.lms.lomboktest.food.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.lms.lomboktest.food.dto.kakao.DocumentDto;
-import com.lms.lomboktest.food.dto.kakao.MetaDto;
-import com.lms.lomboktest.food.dto.naver.SearchLocalItem;
+import com.lms.lomboktest.food.model.dto.kakao.DocumentDto;
+import com.lms.lomboktest.food.model.dto.kakao.MetaDto;
+import com.lms.lomboktest.food.model.dto.naver.SearchLocalItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchLocalRes {
+public class SearchResponse {
 
     // 지역 검색 출력 결과를 변수화
 

@@ -1,4 +1,4 @@
-package com.lms.lomboktest.food.repository;
+package com.lms.lomboktest.food.model.repository;
 
 
 public interface FoodCntDto {

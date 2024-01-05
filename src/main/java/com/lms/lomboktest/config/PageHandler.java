@@ -1,4 +1,4 @@
-package com.lms.lomboktest.food.dto;
+package com.lms.lomboktest.config;
 
 
 import lombok.Data;

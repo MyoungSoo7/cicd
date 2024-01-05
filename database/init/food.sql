@@ -15,9 +15,8 @@ DROP TABLE IF EXISTS `food`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `food` (
                              `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                             `created_date` datetime(6) DEFAULT NULL,
-                             `modified_date` datetime(6) DEFAULT NULL,
                              `food` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+                             `searchCnt` BIGINT	DEFAULT NULL,
                              PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

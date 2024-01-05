@@ -1,4 +1,4 @@
-package com.lms.lomboktest.food.dto.kakao;
+package com.lms.lomboktest.food.model.dto.kakao;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;

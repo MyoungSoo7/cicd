@@ -1,4 +1,4 @@
-package com.lms.lomboktest.food.entity;
+package com.lms.lomboktest.food.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,9 +17,7 @@ public class Food  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String food;
-    private String address;
-    private double latitude;
-    private double longitude;
+    private double searchCnt;
 
 
 }

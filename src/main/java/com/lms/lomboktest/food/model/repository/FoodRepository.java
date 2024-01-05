@@ -1,13 +1,13 @@
-package com.lms.lomboktest.food.repository;
+package com.lms.lomboktest.food.model.repository;
 
 
-import com.lms.lomboktest.food.entity.Food;
+import com.lms.lomboktest.food.model.Food;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface FoodReposiroty extends JpaRepository<Food, Long> {
+public interface FoodRepository extends JpaRepository<Food, Long> {
 
     @Query( nativeQuery = true,
             value= """

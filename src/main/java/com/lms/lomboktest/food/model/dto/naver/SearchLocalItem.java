@@ -1,4 +1,4 @@
-package com.lms.lomboktest.food.dto.naver;
+package com.lms.lomboktest.food.model.dto.naver;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
