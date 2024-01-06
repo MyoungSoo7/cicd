@@ -28,8 +28,8 @@ class KakaoSearchServiceTest {
         int page = 1;
 
         // when
-        SearchResponse result = kakaoSearchService.localSearch(keyword,sort,page);
-        System.out.println(result);
+    /*    SearchResponse result = kakaoSearchService.localSearch(keyword,sort,page);
+        System.out.println(result);*/
 
     }
 

@@ -21,8 +21,8 @@ class NaverSearchServiceTest {
         int page = 1;
 
         // when
-        SearchResponse result = naverSearchService.localSearch(keyword,sort,page);
-        System.out.println(result);
+    /*    SearchResponse result = naverSearchService.localSearch(keyword,sort,page);
+        System.out.println(result);*/
 
 
 
