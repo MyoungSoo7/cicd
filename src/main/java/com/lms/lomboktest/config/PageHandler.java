@@ -2,7 +2,9 @@ package com.lms.lomboktest.config;
 
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Data
 public class PageHandler {
 
@@ -29,7 +31,7 @@ public class PageHandler {
     }
 
     void print(){
-        System.out.println("pageHandler"+page);
+        log.info("pageHandler"+page);
         System.out.print(prev ? "이전" : "");
         for(int i=beginPage; i<=endPage; i++){
             System.out.print(i==page ? i : i);

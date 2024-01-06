@@ -22,7 +22,7 @@ class NaverSearchServiceTest {
 
         // when
     /*    SearchResponse result = naverSearchService.localSearch(keyword,sort,page);
-        System.out.println(result);*/
+        log.info(result);*/
 
 
 

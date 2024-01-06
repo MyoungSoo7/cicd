@@ -1,8 +1,8 @@
 package com.lms.lomboktest.food.service;
 
 
-import com.lms.lomboktest.food.model.dto.SearchResponse;
 import com.lms.lomboktest.food.model.Food;
+import com.lms.lomboktest.food.model.dto.SearchResponse;
 import com.lms.lomboktest.food.model.repository.FoodCntDto;
 import com.lms.lomboktest.food.model.repository.FoodRepository;
 import com.lms.lomboktest.food.service.impl.FoodSearchServiceImpl;
@@ -14,11 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @Service
@@ -33,6 +31,9 @@ public class NaverSearchService implements FoodSearchServiceImpl {
     private String naverClientSecret;
     @Value("${naver.url.search.local}")
     private String naverLocalSearchUrl;
+
+    //@CircuitBreaker(name = "circuit-sample-3000", fallbackMethod = "searchFoodFallback")
+
 
     @CircuitBreaker(name = "circuit-sample-3000", fallbackMethod = "searchFoodFallback")
     @Override

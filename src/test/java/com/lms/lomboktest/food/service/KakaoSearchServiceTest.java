@@ -29,7 +29,7 @@ class KakaoSearchServiceTest {
 
         // when
     /*    SearchResponse result = kakaoSearchService.localSearch(keyword,sort,page);
-        System.out.println(result);*/
+        log.info(result);*/
 
     }
 

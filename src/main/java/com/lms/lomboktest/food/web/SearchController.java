@@ -42,6 +42,7 @@ public class SearchController {
             searchResponse = new SearchResponse();
             log.info("검색어가 없습니다.");
         }else{
+            //new Thread(naverSearchService.saveFoodKeyword(food.getFood())).start();
             naverSearchService.saveFoodKeyword(food.getFood());
             searchResponse = naverSearchService.localSearch(food.getFood(), food.getSort() ,1);
         }
