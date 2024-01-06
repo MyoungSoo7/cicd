@@ -2,12 +2,6 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
-    <!--    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
-    <!--        <encoder>-->
-    <!--            <pattern>${CONSOLE_LOG_PATTERN}</pattern>-->
-    <!--            <charset>${CONSOLE_LOG_CHARSET}</charset>-->
-    <!--        </encoder>-->
-    <!--    </appender>-->
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>logs/application.log</file>

@@ -37,10 +37,6 @@ public class NaverSearchService implements FoodSearchServiceImpl {
     @CircuitBreaker(name = "circuit-sample-3000", fallbackMethod = "searchFoodFallback")
     @Override
     public SearchResponse localSearch(String query, String sort , int page) {
-        if(ObjectUtils.isEmpty(query)) {
-            SearchResponse searchResponse = new SearchResponse();
-            return searchResponse;
-        }
 
         long start = System.currentTimeMillis();
         try {
@@ -55,7 +51,6 @@ public class NaverSearchService implements FoodSearchServiceImpl {
         UriComponentsBuilder uriBuilder = getUriComponentsBuilder(query, sort);
         // ResponseEntity 생성
         var responseEntity = getSearchResponseResponseEntity(uriBuilder);
-        //String responseBody = String.valueOf(responseEntity.getBody());
         SearchResponse sr = responseEntity.getBody();
         log.info("네이버 검색 API 호출 성공");
         return sr;

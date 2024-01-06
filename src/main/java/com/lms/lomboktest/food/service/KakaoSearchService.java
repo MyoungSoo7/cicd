@@ -91,8 +91,6 @@ public class KakaoSearchService implements FoodSearchServiceImpl {
     }
 
 
-
-
     @Override
     public List<FoodCntDto> foodListWithCount() {
         return foodRepository.findFoodCnt();
