@@ -39,7 +39,7 @@ resilience4j:
         # COUNT_BASED: array크기, TIME_BASED: 초
         slidingWindowSize: 5
         # circuit을 동작시키기위한 최소한의 call 수
-        minimumNumberOfCalls: 2
+        minimumNumberOfCalls: 6
         slowCallRateThreshold: 100
         slowCallDurationThreshold: 60000
         failureRateThreshold: 50 # 실패율 임계값(50%)

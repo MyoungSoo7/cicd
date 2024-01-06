@@ -39,11 +39,11 @@ public class NaverSearchService implements FoodSearchServiceImpl {
     public SearchResponse localSearch(String query, String sort , int page) {
 
         long start = System.currentTimeMillis();
-        try {
+    /*    try {
             Thread.sleep(5000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
+        }*/
 
         long end = System.currentTimeMillis();
         log.info("[slowCall] call => {}ms", end - start);
