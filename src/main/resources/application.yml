@@ -15,28 +15,6 @@ spring:
   thymeleaf:
     cache: false
 
-#server:
-#  port: 9090
-#
-#route:
-#  order-api:
-#    v1:
-#      base-url: http://localhost:8082/
-
-#resilience4j:
-#  circuitbreaker:
-#    failure-rate-threshold: 10   # 실패 10% 이상 시 서킷 오픈
-#    slow-call-duration-threshold: 500   # 500ms 이상 소요 시 실패로 간주
-#    slow-call-rate-threshold: 10   # slowCallDurationThreshold 초과 비율이 10% 이상 시 서킷 오픈
-#    wait-duration-in-open-state: 30000   # OPEN -> HALF-OPEN 전환 전 기다리는 시간
-#    minimum-number-of-calls: 50   # 집계에 필요한 최소 호출 수
-#    sliding-window-size: 100   # 서킷 CLOSE 상태에서 N회 호출 도달 시 failureRateThreshold 실패 비율 계산
-#    permitted-number-of-calls-in-half-open-state: 30   # HALFOPEN -> CLOSE or OPEN 으로 판단하기 위해 호출 횟수
-#  retry:
-#    wait-duration: 100   # 재시도 사이 간격
-#    max-attempts: 2   # 재시도 횟수(최초 호출 포함)
-
-
 resilience4j:
   circuitbreaker:
     configs:
@@ -60,35 +38,6 @@ resilience4j:
       circuit-sample-3000:
         baseConfig: default
         slowCallDurationThreshold: 3000 # 응답시간이 느린것으로 판단할 기준 시간 [ms]
-
-#resilience4j:
-#  circuitbreaker:
-##    configs:
-##      default:  # 기본 config 명
-##        registerHealthIndicator: true
-##        # COUNT_BASED(마지막 N번의 호출 결과를 기반), TIME_BASED(마지막 N초의 결과를 기반) (호출 결과를 저장하고 집계하기 위해 slidingWindow 사용)
-##        slidingWindowType: COUNT_BASED
-##        # COUNT_BASED: array크기, TIME_BASED: 초
-##        slidingWindowSize: 5
-##        # circuit을 동작시키기위한 최소한의 call 수
-##        minimumNumberOfCalls: 1
-##        slowCallRateThreshold: 100
-##        slowCallDurationThreshold: 60000
-##        failureRateThreshold: 50 # 실패율 임계값(50%)
-##        permittedNumberOfCallsInHalfOpenState: 3
-##        # 서킷의 상태가 Open 에서 Half-open 으로 변경되기전에 Circuit Break가 기다리는 시간[s](HALF_OPEN 상태로 빨리 전환되어 장애가 복구 될 수 있도록)
-##        waitDurationInOpenState: 20s
-#    instances:
-#      circuit-sample-3000:
-#        slowCallDurationThreshold: 3000
-#        failure-rate-threshold: 60
-#        wait-duration-in-open-state: 5000
-#        permitted-number-of-calls-in-half-open-state: 10
-#        minimum-number-of-calls: 10
-#        sliding-window-size: 10
-#        sliding-window-type: count_based
-
-
 
 naver:
   client:
