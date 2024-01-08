@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: local  #default profile
+    active: prod  #default profile
     group:
       local:
         - common
@@ -103,7 +103,7 @@ naver:
 kakao:
   rest:
     api:
-      key: 0c8e14fd07f2600795dcbfcc3aa816fa
+      key: ${KAKAO_REST_API_KEY}
 
 
 server:
@@ -143,7 +143,7 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
         format_sql: true
