@@ -93,7 +93,7 @@ resilience4j:
 naver:
   client:
     id: zdqMoIkFaK8uKvC2oNY2
-    secret: LiZfsgtuD5
+    secret: ${X_NAVER_CLIENT_SECRET}
   url:
     search:
       local: https://openapi.naver.com/v1/search/local.json
