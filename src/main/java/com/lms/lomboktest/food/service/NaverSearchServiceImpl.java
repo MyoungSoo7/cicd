@@ -40,15 +40,6 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
     @Override
     public SearchResponse foodSearch(String query, String sort , int page) {
 
-        long start = System.currentTimeMillis();
-        try {
-            Thread.sleep(5000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        long end = System.currentTimeMillis();
-        log.info("[slowCall] call => {}ms", end - start);
         // URI 생성
         UriComponentsBuilder uriBuilder = getUriComponentsBuilder(query, sort);
         // ResponseEntity 생성
