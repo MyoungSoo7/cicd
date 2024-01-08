@@ -26,7 +26,7 @@ class PageHandlerTest {
 
     }
 
-    @Test
+ /*   @Test
     void ThreadTest(){
 
 
@@ -36,7 +36,7 @@ class PageHandlerTest {
                 Thread.sleep(1000);  // 1초 동안 잠을 잔다.
             } catch(Exception e ) {}
         }
-    }
+    }*/
 
 
 

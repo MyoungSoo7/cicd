@@ -31,7 +31,7 @@ public class PerformanceInterceptor implements HandlerInterceptor {
         // 2. 후처리 작업
         long startTime = (long) request.getAttribute("startTime");
         long endTime = System.currentTimeMillis();
-        log.info("[" + ((HttpServletRequest) request).getRequestURI() + "]");
+        log.info("[" + request.getRequestURI() + "]");
         log.info(" time =" + (endTime - startTime));
 
         HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);

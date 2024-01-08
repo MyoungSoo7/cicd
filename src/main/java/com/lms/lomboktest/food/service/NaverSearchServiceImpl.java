@@ -5,7 +5,7 @@ import com.lms.lomboktest.food.model.Food;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
 import com.lms.lomboktest.food.model.repository.FoodCntDto;
 import com.lms.lomboktest.food.model.repository.FoodRepository;
-import com.lms.lomboktest.food.service.impl.FoodSearchServiceImpl;
+import com.lms.lomboktest.food.service.impl.FoodSearchService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class NaverSearchService implements FoodSearchServiceImpl {
+public class NaverSearchServiceImpl implements FoodSearchService  {
 
     private final FoodRepository foodRepository;
     @Value(value = "${naver.client.id}")
@@ -32,19 +32,20 @@ public class NaverSearchService implements FoodSearchServiceImpl {
     @Value("${naver.url.search.local}")
     private String naverLocalSearchUrl;
 
-    //@CircuitBreaker(name = "circuit-sample-3000", fallbackMethod = "searchFoodFallback")
+    private final KakaoSearchServiceImpl kakaoSearchServiceImpl;
 
 
-    @CircuitBreaker(name = "circuit-sample-3000", fallbackMethod = "searchFoodFallback")
+
+    @CircuitBreaker(name = "circuit-sample-common", fallbackMethod = "searchFoodFallback")
     @Override
-    public SearchResponse localSearch(String query, String sort , int page) {
+    public SearchResponse foodSearch(String query, String sort , int page) {
 
         long start = System.currentTimeMillis();
-    /*    try {
+        try {
             Thread.sleep(5000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
 
         long end = System.currentTimeMillis();
         log.info("[slowCall] call => {}ms", end - start);
@@ -94,9 +95,6 @@ public class NaverSearchService implements FoodSearchServiceImpl {
         return foodRepository.findFoodCnt();
     }
 
-
-    //폴백 메스드 선언 방법
-
     @Override
     public void saveFoodKeyword(String query) {
         foodRepository.save(Food.builder().food(query).build());
@@ -104,7 +102,7 @@ public class NaverSearchService implements FoodSearchServiceImpl {
     }
 
     private SearchResponse searchFoodFallback(Throwable t) {
-        SearchResponse sr = null;
+        SearchResponse sr = kakaoSearchServiceImpl.foodSearch("갈비집", "random", 1);
         return sr;
     }
 

@@ -5,7 +5,7 @@ import com.lms.lomboktest.food.model.dto.SearchResponse;
 import com.lms.lomboktest.food.model.Food;
 import com.lms.lomboktest.food.model.repository.FoodCntDto;
 import com.lms.lomboktest.food.model.repository.FoodRepository;
-import com.lms.lomboktest.food.service.impl.FoodSearchServiceImpl;
+import com.lms.lomboktest.food.service.impl.FoodSearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +16,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
+import org.springframework.retry.annotation.CircuitBreaker;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class KakaoSearchService implements FoodSearchServiceImpl {
+public class KakaoSearchServiceImpl implements FoodSearchService {
 
     private static final String KAKAO_LOCAL_CATEGORY_SEARCH_URL = "https://dapi.kakao.com/v2/local/search/keyword.json";
     private static final String FOOD_CATEGORY = "FD6";
@@ -44,7 +45,7 @@ public class KakaoSearchService implements FoodSearchServiceImpl {
             backoff = @Backoff(delay = 2000)
     )
     @Override
-    public SearchResponse localSearch(String query, String sort, int page) {
+    public SearchResponse foodSearch(String query, String sort, int page) {
 
         if(ObjectUtils.isEmpty(query)) {
             SearchResponse searchResponse = new SearchResponse();
@@ -56,7 +57,6 @@ public class KakaoSearchService implements FoodSearchServiceImpl {
         // ResponseEntity 생성
         var responseEntity = getSearchResponseResponseEntity(uriBuilder.build().encode().toUri());
 
-        String responseBody = String.valueOf(responseEntity.getBody());
         SearchResponse searchResponse = responseEntity.getBody();
         log.info("카카오 검색 API 호출 성공");
         return searchResponse;
