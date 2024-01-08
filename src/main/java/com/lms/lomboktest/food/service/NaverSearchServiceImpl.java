@@ -93,7 +93,7 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
     }
 
     private SearchResponse searchFoodFallback(Throwable t) {
-        SearchResponse sr = kakaoSearchServiceImpl.foodSearch("갈비집", "random", 1);
+        SearchResponse sr = null;
         return sr;
     }
 
