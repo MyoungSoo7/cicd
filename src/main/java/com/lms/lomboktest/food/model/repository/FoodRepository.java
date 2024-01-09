@@ -7,16 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface FoodRepository extends JpaRepository<Food, Long> {
+public interface FoodRepository extends JpaRepository<Food, String> {
 
-    @Query( nativeQuery = true,
-            value= """
-                     SELECT f.id as id, f.food as food , count(f.food) as cnt                            
-                     FROM food f
-                     GROUP BY food
-                     ORDER BY cnt DESC
-                     LIMIT 10
-            """)
-    List<FoodCntDto> findFoodCnt();
+
 
 }

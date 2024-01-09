@@ -1,9 +1,6 @@
 package com.lms.lomboktest.food.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "food")
@@ -14,10 +11,21 @@ import lombok.*;
 public class Food  {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String food;
-    private double searchCnt;
+    private Long searchCnt;
+
+    @Version
+    private Long version;
+
+    public Food(String food , Long searchCnt) {
+        this.food = food;
+        this.searchCnt = searchCnt;
+    }
+
+
+    public void increaseSearchCnt() {
+        searchCnt+=1;
+    }
 
 
 }

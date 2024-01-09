@@ -1,9 +1,9 @@
 package com.lms.lomboktest.food.service;
 
 
+import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
 import com.lms.lomboktest.food.model.Food;
-import com.lms.lomboktest.food.model.repository.FoodCntDto;
 import com.lms.lomboktest.food.model.repository.FoodRepository;
 import com.lms.lomboktest.food.service.impl.FoodSearchService;
 import lombok.RequiredArgsConstructor;
@@ -16,10 +16,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.CircuitBreaker;
 import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -92,13 +92,18 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
 
 
     @Override
-    public List<FoodCntDto> foodListWithCount() {
-        return foodRepository.findFoodCnt();
+    public List<Food> foodListWithCount(){
+        return foodRepository.findAll();
     }
 
+    @Transactional
     @Override
-    public void saveFoodKeyword(String query) {
-        foodRepository.save(Food.builder().food(query).build());
+    public SearchKeywordDto saveFoodKeyword(String query) {
+        Food food = foodRepository.findById(query).orElse(new Food(query, 0L));
+        food.increaseSearchCnt();
+        log.info("음식 키워드 저장");
+
+        return new SearchKeywordDto(foodRepository.save(food));
     }
 
     @Recover

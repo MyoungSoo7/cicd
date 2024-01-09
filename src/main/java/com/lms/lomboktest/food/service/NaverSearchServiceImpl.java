@@ -2,8 +2,8 @@ package com.lms.lomboktest.food.service;
 
 
 import com.lms.lomboktest.food.model.Food;
+import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
-import com.lms.lomboktest.food.model.repository.FoodCntDto;
 import com.lms.lomboktest.food.model.repository.FoodRepository;
 import com.lms.lomboktest.food.service.impl.FoodSearchService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -82,14 +83,18 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
     }
 
     @Override
-    public List<FoodCntDto> foodListWithCount(){
-        return foodRepository.findFoodCnt();
+    public List<Food> foodListWithCount(){
+        return foodRepository.findAll();
     }
 
+    @Transactional
     @Override
-    public void saveFoodKeyword(String query) {
-        foodRepository.save(Food.builder().food(query).build());
+    public SearchKeywordDto saveFoodKeyword(String query) {
+        Food food = foodRepository.findById(query).orElse(new Food(query, 0L));
+        food.increaseSearchCnt();
         log.info("음식 키워드 저장");
+
+        return new SearchKeywordDto(foodRepository.save(food));
     }
 
     private SearchResponse searchFoodFallback(Throwable t) {
