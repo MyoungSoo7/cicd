@@ -16,8 +16,7 @@ spring-data-jpa <br>
 
 
 
-#```mermaid
-#flowchart LR
-#Client --> G1(API Gateway) --> M1(Hello API Server)
-#Client --> G1(API Gateway) --> M2(Order API Server)
-#```
+```mermaid
+flowchart LR
+Client --> API --> /Food
+```
