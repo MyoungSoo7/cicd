@@ -87,8 +87,8 @@ spring:
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://database-1.c5aek8m6e48r.ap-northeast-2.rds.amazonaws.com:3307/api?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
-    username: ${SPRING_DATASOURCE_USERNAME}
-    password: ${SPRING_DATASOURCE_PASSWORD}
+    username: ${DB_ID}
+    password: ${DB_PW}
   jpa:
     hibernate:
       ddl-auto: validate
