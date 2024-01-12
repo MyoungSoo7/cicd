@@ -1,0 +1,2 @@
+POST {{host}}/search?keyword=순두부
+Content-Type: application/json
