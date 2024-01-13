@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: prod  #default profile 
+    active: local  #default profile
     group:
       local:
         - common
@@ -77,6 +77,8 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+    # 데이터베이스 트랜잭션 범위내에서 데이터베이스 액세르 허용    
+    open-in-view: false
 
 
 ---
@@ -96,6 +98,7 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+    open-in-view: false
 
 
 
