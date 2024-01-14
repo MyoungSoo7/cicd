@@ -8,7 +8,6 @@ EXPOSE 8080
 
 CMD ["java", "-jar", "app.jar"]
 
-
 # RUN mkdir -p /app
 # WORKDIR /app
 
