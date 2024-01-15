@@ -78,7 +78,7 @@ spring:
         format_sql: true
         show_sql: true
     # 데이터베이스 트랜잭션 범위내에서 데이터베이스 액세르 허용    
-    open-in-view: false
+ 
 
 
 ---
