@@ -34,10 +34,10 @@ jobs:
           echo "DB_PW=${{ secrets.DB_PW }}" >> .env
           echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
           echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env          
-          echo "CLOUDWATCH_REGION=ap-northeast-2" >> .env
-          echo "CLOUDWATCH_GROUP=/ecs/hhplus-api-prod" >> .env
-          echo "CLOUDWATCH_STREAM_INFO=info" >> .env
-          echo "CLOUDWATCH_STREAM_ERROR=error" >> .env
+          echo "CLOUDWATCH_REGION=`ap-northeast-2`" >> .env
+          echo "CLOUDWATCH_GROUP=`/ecs/hhplus-api-prod`" >> .env
+          echo "CLOUDWATCH_STREAM_INFO=`info`" >> .env
+          echo "CLOUDWATCH_STREAM_ERROR=`error`" >> .env
         env:
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅 
           DB_ID: ${{secrets.DB_ID}} # env 로 직접 세팅 
