@@ -1,7 +1,6 @@
 package com.lms.lomboktest.config;
 
-
-import lombok.Data;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,18 +38,4 @@ public class PageHandler {
         System.out.print(next ? "다음" : "");
     }
 
-    @Override
-    public String toString() {
-        return "PageHandler{" +
-                "totalCount=" + totalCount +
-                ", pageSize=" + pageSize +
-                ", navSize=" + navSize +
-                ", totoalPage=" + totoalPage +
-                ", page=" + page +
-                ", beginPage=" + beginPage +
-                ", endPage=" + endPage +
-                ", prev=" + prev +
-                ", next=" + next +
-                '}';
-    }
 }

@@ -1,6 +1,7 @@
 package com.lms.lomboktest.food.service;
 
 
+import com.lms.lomboktest.food.cache.RedisTemplateService;
 import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
 import com.lms.lomboktest.food.model.Food;
@@ -20,6 +21,7 @@ import org.springframework.retry.annotation.Recover;
 import org.springframework.retry.annotation.Retryable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -37,7 +39,7 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
     @Value("${kakao.rest.api.key}")
     private String kakaoRestApiKey;
     private final FoodRepository foodRepository;
-
+    private final RedisTemplateService redisTemplateService;
 
     @Retryable(
             exceptionExpression = "RuntimeException.class",
@@ -93,12 +95,15 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
 
     @Override
     public List<Food> foodListWithCount(){
+        List<Food> foodList = redisTemplateService.findAll();
+        if(!CollectionUtils.isEmpty(foodList)) return foodList;
         return foodRepository.findAll();
     }
 
     @Transactional
     @Override
     public SearchKeywordDto saveFoodKeyword(String query) {
+
         Food food = foodRepository.findById(query).orElse(new Food(query, 0L));
         food.increaseSearchCnt();
         log.info("음식 키워드 저장");

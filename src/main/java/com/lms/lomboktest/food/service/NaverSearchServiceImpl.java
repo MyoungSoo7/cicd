@@ -1,6 +1,7 @@
 package com.lms.lomboktest.food.service;
 
 
+import com.lms.lomboktest.food.cache.RedisTemplateService;
 import com.lms.lomboktest.food.model.Food;
 import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
@@ -15,6 +16,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -34,6 +36,7 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
     private String naverLocalSearchUrl;
 
     private final KakaoSearchServiceImpl kakaoSearchServiceImpl;
+    private final RedisTemplateService redisTemplateService;
 
 
 
@@ -84,6 +87,8 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
 
     @Override
     public List<Food> foodListWithCount(){
+        /*List<Food> foodList = redisTemplateService.findAll();
+        if(!CollectionUtils.isEmpty(foodList)) return foodList;*/
         return foodRepository.findAll();
     }
 
@@ -93,6 +98,7 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
         Food food = foodRepository.findById(query).orElse(new Food(query, 0L));
         food.increaseSearchCnt();
         log.info("음식 키워드 저장");
+
 
         return new SearchKeywordDto(foodRepository.save(food));
     }
