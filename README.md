@@ -18,5 +18,5 @@ spring-data-jpa <br>
 
 ```mermaid
 flowchart LR
-Client --> API --> /Food
+Client --> API --> /food
 ```
