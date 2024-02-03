@@ -5,7 +5,7 @@
 # 작업내용
 키워드를 이용해 맛집검색
 
-# [ERD] 
+# ERD
 ![image](https://github.com/MyoungSoo7/cicd/assets/13523622/c787163c-cb91-40b1-b8be-c1c4574d293a)
 
 
