@@ -1,4 +1,4 @@
-package com.lms.lomboktest.config;
+package com.lms.lomboktest.food.web;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

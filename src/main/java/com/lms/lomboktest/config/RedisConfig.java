@@ -1,3 +1,4 @@
+/*
 package com.lms.lomboktest.config;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -33,3 +34,4 @@ public class RedisConfig {
     }
 
 }
+*/

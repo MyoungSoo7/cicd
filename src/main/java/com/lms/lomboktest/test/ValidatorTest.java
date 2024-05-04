@@ -1,4 +1,4 @@
-package com.lms.lomboktest.config;
+package com.lms.lomboktest.test;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
