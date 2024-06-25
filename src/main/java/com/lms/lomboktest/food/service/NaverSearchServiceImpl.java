@@ -1,7 +1,6 @@
 package com.lms.lomboktest.food.service;
 
 
-import com.lms.lomboktest.food.cache.RedisTemplateService;
 import com.lms.lomboktest.food.model.Food;
 import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
@@ -36,7 +35,7 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
     private String naverLocalSearchUrl;
 
     private final KakaoSearchServiceImpl kakaoSearchServiceImpl;
-    private final RedisTemplateService redisTemplateService;
+    //private final RedisTemplateService redisTemplateService;
 
 
 

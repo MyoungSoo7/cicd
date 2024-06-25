@@ -1,7 +1,6 @@
 package com.lms.lomboktest.food.service;
 
 
-import com.lms.lomboktest.food.cache.RedisTemplateService;
 import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
 import com.lms.lomboktest.food.model.Food;
@@ -39,7 +38,7 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
     @Value("${kakao.rest.api.key}")
     private String kakaoRestApiKey;
     private final FoodRepository foodRepository;
-    private final RedisTemplateService redisTemplateService;
+    //private final RedisTemplateService redisTemplateService;
 
     @Retryable(
             exceptionExpression = "RuntimeException.class",
@@ -95,8 +94,8 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
 
     @Override
     public List<Food> foodListWithCount(){
-        List<Food> foodList = redisTemplateService.findAll();
-        if(!CollectionUtils.isEmpty(foodList)) return foodList;
+        /*List<Food> foodList = redisTemplateService.findAll();
+        if(!CollectionUtils.isEmpty(foodList)) return foodList;*/
         return foodRepository.findAll();
     }
 

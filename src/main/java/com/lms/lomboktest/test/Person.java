@@ -1,3 +1,4 @@
+/*
 package com.lms.lomboktest.test;
 
 import lombok.Data;
@@ -7,3 +8,4 @@ public class Person {
 
     private int age;
 }
+*/
