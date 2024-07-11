@@ -8,7 +8,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<!--부트스트랩 css 추가-->
 <link rel="stylesheet" href="/css/lib/bootstrap.min.css">
 <style>
     .grid-image {
@@ -21,23 +20,14 @@
         width: 50%;
         height: 450px;
     }
+
     body {
         font-family: 'Noto Sans KR', sans-serif;
     }
 </style>
 
- <script>
-     $(document).ready(function(){
-         alert(2);
-     });
-     setTimeout(function(){
-         alert(1);
-     }, 3000);
-
-
- </script>
 <body>
- <div class="container">
+<div class="container">
     <div>
         <h2>맛집 추천</h2>
     </div>
@@ -46,19 +36,17 @@
             <div>
                 <label for="address">음식관련 키워드를 입력하시면 맛집을 추천해드립니다.</label>
                 <input type="text" class="form-control" id="food" name="food"
-                       placeholder="ex) 갈비집" >
+                       placeholder="ex) 갈비집">
                 <input type="hidden" class="form-control" id="page" name="page" value="1">
-                 <input type="radio" id="sort" name="sort" value="comment" checked="checked">카페/블로그 리뷰 개수 순</input>
-                 <input type="radio" id="sort" name="sort" value="random">유사도순</input>
+                <input type="radio" id="sort" name="sort" value="comment" checked="checked">카페/블로그 리뷰 개수 순</input>
+                <input type="radio" id="sort" name="sort" value="random">유사도순</input>
             </div>
             <div>
                 <button type="submit" class="btn btn-primary" id="btn-save">Search</button>
             </div>
         </form>
     </div>
- </div>
-    <!--&lt;!&ndash;부트스트랩 js, jquery 추가&ndash;&gt;
-    <script src="/js/lib/jquery.min.js"></script>
-    <script src="/js/lib/bootstrap.min.js"></script>-->
+</div>
+
 </body>
 </html>

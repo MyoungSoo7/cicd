@@ -1,4 +1,3 @@
-/*
 package com.lms.lomboktest.food.service;
 
 import com.lms.lomboktest.food.model.Food;
@@ -61,4 +60,4 @@ class NaverSearchServiceImplTest {
 
     }
 
-}*/
+}
