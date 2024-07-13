@@ -1,9 +1,9 @@
 package com.lms.lomboktest.food.service;
 
 
+import com.lms.lomboktest.food.model.Food;
 import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
-import com.lms.lomboktest.food.model.Food;
 import com.lms.lomboktest.food.model.repository.FoodRepository;
 import com.lms.lomboktest.food.service.impl.FoodSearchService;
 import lombok.RequiredArgsConstructor;
@@ -53,13 +53,11 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
             return searchResponse;
         }
 
-        // URI 생성
         UriComponentsBuilder uriBuilder = getUriComponentsBuilder(query, page);
-        // ResponseEntity 생성
         var responseEntity = getSearchResponseResponseEntity(uriBuilder.build().encode().toUri());
 
         SearchResponse searchResponse = responseEntity.getBody();
-        log.info("카카오 검색 API 호출 성공");
+        log.info("카카오 검색 API 호출");
         return searchResponse;
 
     }
@@ -94,19 +92,15 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
 
     @Override
     public List<Food> foodListWithCount(){
-        /*List<Food> foodList = redisTemplateService.findAll();
-        if(!CollectionUtils.isEmpty(foodList)) return foodList;*/
         return foodRepository.findAll();
     }
 
     @Transactional
     @Override
     public SearchKeywordDto saveFoodKeyword(String query) {
-
         Food food = foodRepository.findById(query).orElse(new Food(query, 0L));
         food.increaseSearchCnt();
         log.info("음식 키워드 저장");
-
         return new SearchKeywordDto(foodRepository.save(food));
     }
 

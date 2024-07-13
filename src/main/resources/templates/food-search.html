@@ -7,14 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta property="og:title" content="맛집찾기">
   <meta property="og:description" content="맛집찾기">
-  <!--<meta property="og:image" content="images/og_selectshop.png">-->
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.css"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.4/pagination.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
- <!-- <script src="basic.js"></script>-->
 
     <script>
         function popularKeyword(){
@@ -38,9 +36,7 @@
 
 <body>
 맛집 찾기
-    <!--${totalCnt}건 <br>
-   전체페이지 : {{ page }} <br>
-   마지막페이지 여부 {{next}} <br>-->
+
     <table class="table table-hover">
         <tr>
             <th>제목</th>
@@ -57,17 +53,7 @@
                 <td th:text="${food.mapx}"></td>
          </tr>
     </table>
-    <br>
-  <!--   <div th:if="${pageHandler != null}" >
-         <span th:each="num : ${#numbers.sequence(pageHandler.beginPage,pageHandler.endPage)}" >
-                <a th:if="${num == pageHandler.page}" th:text="${num}"></a>
-                <a th:if="${num != pageHandler.page}" th:href="@{/search(keyword=${keyword},page=${num},pageSize=${pageHandler.pageSize})}" th:text="${num} "></a>
-         </span>
-     </div>-->
-    <br>
-
     <!--  <button onclick="popularKeyword()">인기키워드</button>-->
-
     <table class="table table-hover">
     <tr>
         <th>keyword</th>

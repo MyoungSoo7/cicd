@@ -1,6 +1,6 @@
 package com.lms.lomboktest.config;
 
-import lombok.*;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

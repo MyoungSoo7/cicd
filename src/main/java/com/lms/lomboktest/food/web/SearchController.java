@@ -27,8 +27,6 @@ public class SearchController {
         return "main";
     }
 
-    //** redis 낙관적 락 , 비관적락 lock 사용
-    //*** redis db 커넥션 과부하 해결
     @PostMapping("/search")
     public ModelAndView searchFoodApi(@ModelAttribute FoodInputDto food)   {
         ModelAndView modelAndView = new ModelAndView();
