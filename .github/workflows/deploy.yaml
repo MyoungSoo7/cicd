@@ -24,19 +24,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Create prod environments
-        # env 파일로 생성
-        # run: |
-        #   # echo "AWS_ACCESS_KEY=$secrets.AWS_ACCESS_KEY" >> .env
-        #   # echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
-        #   # echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
-        #   # echo "DB_ID=${{ secrets.DB_ID }}" >> .env
-        #   # echo "DB_PW=${{ secrets.DB_PW }}" >> .env
-        #   # echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
-        #   # echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env    
+      - name: Create prod environments        
+        run: | # env 파일로 생성
+          echo "AWS_ACCESS_KEY=$secrets.AWS_ACCESS_KEY" >> .env   
+          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
+          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> .env
+          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> .env
+          echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
+          echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env    
         env:
-          SPRING_DATASOURCE_USERNAME: ${{secrets.DB_ID}} # env 로 직접 세팅 
-          SPRING_DATASOURCE_PASSWORD: ${{secrets.DB_PW}} # env 로 직접 세팅 
+          SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}} # env 로 직접 세팅 
+          SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}} # env 로 직접 세팅 
           KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅           
           X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
           X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅 
