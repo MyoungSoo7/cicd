@@ -20,3 +20,12 @@
 flowchart LR
 Client --> API --> /food
 ```
+
+이미지 태그하고 ECR로 푸시하기에서 get-login API의 경우, aws-cli-v2 에서
+get-login-password API로 변경되었슴
+# 기존
+$ aws ecr get-login --no-include-email --region ap-northeast-2
+# 변경
+$ aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin <ACCOUNT_ID>.dkr.ecr.ap-northeast-2.amazonaws.com/
+
+ 
