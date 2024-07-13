@@ -25,28 +25,23 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Create prod environments
-        run: |
-          echo "AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }}" >> .env
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
-          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
-          echo "DB_ID=${{ secrets.DB_ID }}" >> .env
-          echo "DB_PW=${{ secrets.DB_PW }}" >> .env
-          echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
-          echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env          
-          echo "CLOUDWATCH_REGION=`ap-northeast-2`" >> .env
-          echo "CLOUDWATCH_GROUP=`/ecs/hhplus-api-prod`" >> .env
-          echo "CLOUDWATCH_STREAM_INFO=`info`" >> .env
-          echo "CLOUDWATCH_STREAM_ERROR=`error`" >> .env
-        # env:
-        #   KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅 
-        #   DB_ID: ${{secrets.DB_ID}} # env 로 직접 세팅 
-        #   DB_PW: ${{secrets.DB_PW}} # env 로 직접 세팅 
-        #   X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
-        #   X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅 
-        #   CLOUDWATCH_REGION: ${{secrets.CLOUDWATCH_REGION}} # env 로 직접 세팅 
-        #   CLOUDWATCH_GROUP: ${{secrets.CLOUDWATCH_GROUP}} # env 로 직접 세팅 
-        #   CLOUDWATCH_STREAM_INFO: ${{secrets.CLOUDWATCH_STREAM_INFO}} # env 로 직접 세팅 
-        #   CLOUDWATCH_STREAM_ERROR: ${{secrets.CLOUDWATCH_STREAM_ERROR}} # env 로 직접 세팅 
+        # env 파일로 생성
+        # run: |
+        #   # echo "AWS_ACCESS_KEY=$secrets.AWS_ACCESS_KEY" >> .env
+        #   # echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+        #   # echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
+        #   # echo "DB_ID=${{ secrets.DB_ID }}" >> .env
+        #   # echo "DB_PW=${{ secrets.DB_PW }}" >> .env
+        #   # echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
+        #   # echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env    
+        env:
+          SPRING_DATASOURCE_USERNAME: ${{secrets.DB_ID}} # env 로 직접 세팅 
+          SPRING_DATASOURCE_PASSWORD: ${{secrets.DB_PW}} # env 로 직접 세팅 
+          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅           
+          X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
+          X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅 
+          AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}} # env 로 직접 세팅 
+          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}} # env 로 직접 세팅 
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
