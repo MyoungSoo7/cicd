@@ -75,7 +75,14 @@ jobs:
           wait-for-service-stability: true  
 
 # build:
-
+      # - name: Create prod environments        
+      #   run: | # env 파일로 생성        
+      #      echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
+      #      echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> .env
+      #      echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> .env
+      #      echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
+      #      echo "X_NAVER_CLIENT_ID=${{ secrets.X_NAVER_CLIENT_ID }}" >> .env
+      #      echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env   
 #     runs-on: ubuntu-latest
     
 #     steps:
