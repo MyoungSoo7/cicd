@@ -80,7 +80,7 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: food1
+          service: food2
           cluster: food-prod
           wait-for-service-stability: false  
 
