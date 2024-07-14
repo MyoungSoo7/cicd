@@ -9,7 +9,8 @@ permissions:
   contents: read
   
 env:
-  AWS_REGION: ap-northeast-2
+  AWS_REGION: ap-northeast-2  
+  ECR_REPOSITORY: food-prod
   ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   IMAGE_NAME: food-prod
