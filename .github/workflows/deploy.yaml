@@ -63,15 +63,15 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ./src/main/resources/properties/task.json
-          container-name: food-service-prod
+          container-name: service-prod
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: food-prod
-          cluster: food-prod
+          service: food
+          cluster: cluster-food-prod
           wait-for-service-stability: true  
 
 # build:
