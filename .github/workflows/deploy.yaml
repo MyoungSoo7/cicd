@@ -20,9 +20,28 @@ jobs:
       # needs: build 
       
       steps: 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            **/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
 
+      - name: Permission go Gradlew
+        run: chmod +x ./gradlew
+      - name: Set up Docker environment
+        run: |
+          sudo /etc/init.d/docker start
       - name: Create prod environments        
         run: | # env 파일로 생성        
            echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
@@ -31,6 +50,17 @@ jobs:
            echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
            echo "X_NAVER_CLIENT_ID=${{ secrets.X_NAVER_CLIENT_ID }}" >> .env
            echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env    
+
+      - name: Set YML
+        run: |
+          mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
+          find src
+
+      - name: Build with Gradle
+        run: ./gradlew build    
+
+          
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
