@@ -33,10 +33,8 @@
     "family": "food-prod",
     "taskRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "executionRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
-    "networkMode": "awsvpc",
-    "revision": 5,
-    "volumes": [],
-    "status": "ACTIVE",
+    "networkMode": "awsvpc", 
+    "volumes": [], 
     "requiresAttributes": [
         {
             "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
@@ -80,7 +78,6 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-07-14T23:49:25.908Z",
-    "registeredBy": "arn:aws:iam::383584590835:user/lms",
+   
     "tags": []
 }
