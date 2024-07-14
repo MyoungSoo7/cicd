@@ -1,13 +1,13 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/food-definition-prod:9",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/food-prod:1",
     "containerDefinitions": [
         {
-            "name": "food-service-prod",
-            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod:prod-a413d7590ecb3937831a8ac28922495dfc200d74",
+            "name": "service-prod",
+            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod:2881dde43631593a05f36b49c7efe1ff6cdb270a",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "food-service-prod-8080-tcp",
+                    "name": "service-prod-8080-tcp",
                     "containerPort": 8080,
                     "hostPort": 8080,
                     "protocol": "tcp",
@@ -16,25 +16,28 @@
             ],
             "essential": true,
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "/ecs/food-definition-prod",
+                    "awslogs-group": "/ecs/food-prod",
                     "awslogs-create-group": "true",
                     "awslogs-region": "ap-northeast-2",
                     "awslogs-stream-prefix": "ecs"
-                }
+                },
+                "secretOptions": []
             },
             "systemControls": []
         }
     ],
-    "family": "food-definition-prod",
+    "family": "food-prod",
     "taskRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "executionRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "networkMode": "awsvpc",
-    "revision": 9,
+    "revision": 1,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -80,7 +83,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-07-14T22:39:12.895Z",
-    "registeredBy": "arn:aws:iam::383584590835:user/lms",
+    "registeredAt": "2024-07-14T23:05:08.593Z",
+    "registeredBy": "arn:aws:iam::383584590835:root",
     "tags": []
 }
