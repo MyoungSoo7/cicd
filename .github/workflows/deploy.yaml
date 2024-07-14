@@ -8,9 +8,10 @@ on:
 permissions:
   contents: read
   
-env: 
-  REGISTRY: 383584590835.dkr.ecr.ap-northeast-2.amazonaws.com
-  REPOSITORY: food-prod
+env:
+  AWS_REGION: ap-northeast-2
+  ECR_REGISTRY: 383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod
+  ECR_REPOSITORY: food-prod
   
 jobs:           
   prod-cd:
@@ -30,13 +31,6 @@ jobs:
            echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
            echo "X_NAVER_CLIENT_ID=${{ secrets.X_NAVER_CLIENT_ID }}" >> .env
            echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env    
-        env:
-          SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}} # env 로 직접 세팅 
-          SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}} # env 로 직접 세팅 
-          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅 
-          X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
-          X_NAVER_CLIENT_ID: ${{secrets.X_NAVER_CLIENT_ID}} # env 로 직접 세팅 
-          X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅         
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -57,22 +51,21 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2             
+          aws-region: ${{ env.AWS_REGION }}            
 
       - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push docker image to Amazon ECR
         id: build-image
         env:
-          REGISTRY: 383584590835.dkr.ecr.ap-northeast-2.amazonaws.com
-          REPOSITORY: food-prod
-          IMAGE_TAG: ${{ github.sha }}
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}          
+          IMAGE_TAG: prod-${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:latest .  
-          docker push $REGISTRY/$REPOSITORY:latest
-          echo "image=$REGISTRY/$REPOSITORY:latest" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . --target=prod
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
@@ -93,7 +86,7 @@ jobs:
 # build:
 
 #     runs-on: ubuntu-latest
-
+    
 #     steps:
 #     - uses: actions/checkout@v3
 #     - name: Set up JDK 17
@@ -115,6 +108,14 @@ jobs:
   #   - uses: actions/checkout@v3
   #   - name: Build the Docker image
   #     run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)        
+
+  # env:
+    #       SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}} # env 로 직접 세팅 
+    #       SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}} # env 로 직접 세팅 
+    #       KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅 
+    #       X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
+    #       X_NAVER_CLIENT_ID: ${{secrets.X_NAVER_CLIENT_ID}} # env 로 직접 세팅 
+    #       X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅       
  
   # build-and-push-image:
   #   runs-on: ubuntu-latest
