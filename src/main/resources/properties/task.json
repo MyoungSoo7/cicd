@@ -3,7 +3,7 @@
     "containerDefinitions": [
         {
             "name": "food-service-prod",
-            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod",
+            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod:prod-a9a61fd59c0f1780156897884ee0d73112f6a176",
             "cpu": 0,
             "portMappings": [
                 {
@@ -84,6 +84,6 @@
         "operatingSystemFamily": "LINUX"
     },
     "registeredAt": "2024-07-13T21:07:46.224Z",
-    "registeredBy": "arn:aws:iam::383584590835:root",
+    "registeredBy": "arn:aws:iam::383584590835:user/lms",
     "tags": []
 }
