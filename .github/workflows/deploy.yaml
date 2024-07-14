@@ -12,7 +12,7 @@ env:
   AWS_REGION: ap-northeast-2
   ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
   REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-  IMAGE_NAME: test
+  IMAGE_NAME: food-prod
   
 jobs:           
   prod-cd:
@@ -71,7 +71,7 @@ jobs:
         id: build-image
         env:
           REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: test
+          REPOSITORY: food-prod
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $REGISTRY/$REPOSITORY:latest .  
@@ -83,15 +83,15 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ./src/main/resources/properties/task.json
-          container-name: service-prod
+          container-name: food-service-prod
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: hh17
-          cluster: cluster-hhplus-api-prod
+          service: food1
+          cluster: food-prod
           wait-for-service-stability: false  
 
 # build:
