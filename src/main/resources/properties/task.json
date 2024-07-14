@@ -1,5 +1,4 @@
-{
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/food-prod:5",
+{     
     "containerDefinitions": [
         {
             "name": "service-prod",
@@ -77,7 +76,5 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-   
-    "tags": []
+    } 
 }
