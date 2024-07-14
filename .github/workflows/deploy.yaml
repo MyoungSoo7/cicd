@@ -10,7 +10,7 @@ permissions:
   
 env:
   AWS_REGION: ap-northeast-2
-  ECR_REGISTRY: 383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod
+  ECR_REGISTRY: 383584590835.dkr.ecr.ap-northeast-2.amazonaws.com
   ECR_REPOSITORY: food-prod
   
 jobs:           
