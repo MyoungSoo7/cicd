@@ -1,9 +1,9 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/food-definition-prod:5",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/food-definition-prod:1",
     "containerDefinitions": [
         {
             "name": "food-service-prod",
-            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod:prod-9ae5345b02ec77a5194ef4f0e6a5f83e38265fac",
+            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod",
             "cpu": 0,
             "portMappings": [
                 {
@@ -16,8 +16,10 @@
             ],
             "essential": true,
             "environment": [],
+            "environmentFiles": [],
             "mountPoints": [],
             "volumesFrom": [],
+            "ulimits": [],
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
@@ -25,7 +27,8 @@
                     "awslogs-create-group": "true",
                     "awslogs-region": "ap-northeast-2",
                     "awslogs-stream-prefix": "ecs"
-                }
+                },
+                "secretOptions": []
             },
             "systemControls": []
         }
@@ -34,7 +37,7 @@
     "taskRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "executionRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "networkMode": "awsvpc",
-    "revision": 5,
+    "revision": 1,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -80,7 +83,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2024-07-14T21:25:46.697Z",
-    "registeredBy": "arn:aws:iam::383584590835:user/lms",
+    "registeredAt": "2024-07-13T21:07:46.224Z",
+    "registeredBy": "arn:aws:iam::383584590835:root",
     "tags": []
 }
