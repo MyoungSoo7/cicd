@@ -9,10 +9,9 @@ permissions:
   contents: read
   
 env:
-  AWS_REGION: ap-northeast-2
-  ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-  REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
-  IMAGE_NAME: test
+  AWS_REGION: ${{ secrets.AWS_REGION }} 
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }} 
+  ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }} 
   
 jobs:           
   prod-cd:
@@ -21,26 +20,47 @@ jobs:
       # needs: build 
       
       steps: 
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          
+      - name: Cache Gradle packages
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+            **/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
 
+      - name: Permission go Gradlew
+        run: chmod +x ./gradlew
+      - name: Set up Docker environment
+        run: |
+          sudo /etc/init.d/docker start
       - name: Create prod environments        
-        run: | # env 파일로 생성
-          echo "AWS_ACCESS_KEY=$secrets.AWS_ACCESS_KEY" >> .env   
-          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
-          echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
-          echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> .env
-          echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> .env
-          echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
-          echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env    
-        env:
-          SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}} # env 로 직접 세팅 
-          SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}} # env 로 직접 세팅 
-          KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅           
-          X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
-          X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅 
-          AWS_ACCESS_KEY: ${{secrets.AWS_ACCESS_KEY}} # env 로 직접 세팅 
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}} # env 로 직접 세팅 
+        run: | # env 파일로 생성        
+           echo "KAKAO_REST_API_KEY=${{ secrets.KAKAO_REST_API_KEY }}" >> .env
+           echo "SPRING_DATASOURCE_USERNAME=${{ secrets.SPRING_DATASOURCE_USERNAME }}" >> .env
+           echo "SPRING_DATASOURCE_PASSWORD=${{ secrets.SPRING_DATASOURCE_PASSWORD }}" >> .env
+           echo "X_NAVER_ID=${{ secrets.X_NAVER_ID }}" >> .env
+           echo "X_NAVER_CLIENT_ID=${{ secrets.X_NAVER_CLIENT_ID }}" >> .env
+           echo "X_NAVER_CLIENT_SECRET=${{ secrets.X_NAVER_CLIENT_SECRET }}" >> .env    
+
+      - name: Set YML
+        run: |
+          mkdir -p src/main/resources
+          echo "${{ secrets.APPLICATION_YML }}" | base64 --decode > src/main/resources/application.yml
+          find src
+
+      - name: Build with Gradle
+        run: ./gradlew build    
+
+          
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -61,43 +81,43 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2             
+          aws-region: ${{ secrets.AWS_REGION }}            
 
       - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        id: ecr-login
+        uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build, tag, and push docker image to Amazon ECR
         id: build-image
         env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: test
-          IMAGE_TAG: ${{ github.sha }}
+          ECR_REGISTRY: ${{ steps.ecr-login.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }} 
+          IMAGE_TAG: prod-${{ github.sha }}
         run: |
-          docker build -t $REGISTRY/$REPOSITORY:latest .  
-          docker push $REGISTRY/$REPOSITORY:latest
-          echo "image=$REGISTRY/$REPOSITORY:latest" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: ./src/main/resources/properties/task.json
-          container-name: service-prod
+          container-name: food-service-prod
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: hh17
-          cluster: cluster-hhplus-api-prod
-          wait-for-service-stability: false  
+          service: food-prod
+          cluster: food-prod
+          wait-for-service-stability: true  
 
 # build:
 
 #     runs-on: ubuntu-latest
-
+    
 #     steps:
 #     - uses: actions/checkout@v3
 #     - name: Set up JDK 17
@@ -119,6 +139,14 @@ jobs:
   #   - uses: actions/checkout@v3
   #   - name: Build the Docker image
   #     run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)        
+
+  # env:
+    #       SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}} # env 로 직접 세팅 
+    #       SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}} # env 로 직접 세팅 
+    #       KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}} # env 로 직접 세팅 
+    #       X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
+    #       X_NAVER_CLIENT_ID: ${{secrets.X_NAVER_CLIENT_ID}} # env 로 직접 세팅 
+    #       X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅       
  
   # build-and-push-image:
   #   runs-on: ubuntu-latest

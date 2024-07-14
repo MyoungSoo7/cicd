@@ -1,23 +1,17 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/hhplus-api-prod:9",
+    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/food-definition-prod:5",
     "containerDefinitions": [
         {
-            "name": "service-prod",
-            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/test:latest",
+            "name": "food-service-prod",
+            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod:prod-9ae5345b02ec77a5194ef4f0e6a5f83e38265fac",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "service-prod-8080-tcp",
+                    "name": "food-service-prod-8080-tcp",
                     "containerPort": 8080,
                     "hostPort": 8080,
                     "protocol": "tcp",
                     "appProtocol": "http"
-                },
-                {
-                    "name": "service-prod-3307-tcp",
-                    "containerPort": 3307,
-                    "hostPort": 3307,
-                    "protocol": "tcp"
                 }
             ],
             "essential": true,
@@ -27,19 +21,20 @@
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
+                    "awslogs-group": "/ecs/food-definition-prod",
                     "awslogs-create-group": "true",
-                    "awslogs-group": "/ecs/hhplus-api-prod",
                     "awslogs-region": "ap-northeast-2",
                     "awslogs-stream-prefix": "ecs"
                 }
-            }
+            },
+            "systemControls": []
         }
     ],
-    "family": "hhplus-api-prod",
+    "family": "food-definition-prod",
     "taskRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "executionRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "networkMode": "awsvpc",
-    "revision": 9,
+    "revision": 5,
     "volumes": [],
     "status": "ACTIVE",
     "requiresAttributes": [
@@ -85,7 +80,7 @@
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
     },
-    "registeredAt": "2023-12-30T23:00:17.427Z",
-    "registeredBy": "arn:aws:iam::383584590835:user/cloudtype-ecr",
+    "registeredAt": "2024-07-14T21:25:46.697Z",
+    "registeredBy": "arn:aws:iam::383584590835:user/lms",
     "tags": []
 }
