@@ -1,13 +1,12 @@
-{
-    "taskDefinitionArn": "arn:aws:ecs:ap-northeast-2:383584590835:task-definition/food-definition-prod:5",
+{     
     "containerDefinitions": [
         {
-            "name": "food-service-prod",
-            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod:prod-9ae5345b02ec77a5194ef4f0e6a5f83e38265fac",
+            "name": "service-prod",
+            "image": "383584590835.dkr.ecr.ap-northeast-2.amazonaws.com/food-prod:latest",
             "cpu": 0,
             "portMappings": [
                 {
-                    "name": "food-service-prod-8080-tcp",
+                    "name": "service-prod-8080-tcp",
                     "containerPort": 8080,
                     "hostPort": 8080,
                     "protocol": "tcp",
@@ -21,7 +20,7 @@
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                    "awslogs-group": "/ecs/food-definition-prod",
+                    "awslogs-group": "/ecs/food-prod",
                     "awslogs-create-group": "true",
                     "awslogs-region": "ap-northeast-2",
                     "awslogs-stream-prefix": "ecs"
@@ -30,13 +29,11 @@
             "systemControls": []
         }
     ],
-    "family": "food-definition-prod",
+    "family": "food-prod",
     "taskRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
     "executionRoleArn": "arn:aws:iam::383584590835:role/role-ecs-tasks",
-    "networkMode": "awsvpc",
-    "revision": 5,
-    "volumes": [],
-    "status": "ACTIVE",
+    "networkMode": "awsvpc", 
+    "volumes": [], 
     "requiresAttributes": [
         {
             "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
@@ -79,8 +76,5 @@
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-07-14T21:25:46.697Z",
-    "registeredBy": "arn:aws:iam::383584590835:user/lms",
-    "tags": []
+    } 
 }
