@@ -31,11 +31,9 @@ public class PageHandler {
 
     void print(){
         log.info("pageHandler"+page);
-        System.out.print(prev ? "이전" : "");
         for(int i=beginPage; i<=endPage; i++){
             System.out.print(i==page ? i : i);
         }
-        System.out.print(next ? "다음" : "");
     }
 
 }

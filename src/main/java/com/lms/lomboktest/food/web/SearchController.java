@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,11 +58,4 @@ public class SearchController {
 
         return modelAndView;
     }
-
-  /*  @GetMapping("/foodCnt")
-    public List<FoodCntDto> foodListWithCount() {
-        log.info("음식 카운트 조회");
-        return naverSearchServiceImpl.foodListWithCount();
-    }
-*/
 }

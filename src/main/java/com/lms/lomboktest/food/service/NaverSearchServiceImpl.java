@@ -32,11 +32,7 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
     private String naverClientSecret;
     @Value("${naver.url.search.local}")
     private String naverLocalSearchUrl;
-
     private final KakaoSearchServiceImpl kakaoSearchServiceImpl;
-    //private final RedisTemplateService redisTemplateService;
-
-
 
     @CircuitBreaker(name = "circuit-sample-common", fallbackMethod = "searchFoodFallback")
     @Override

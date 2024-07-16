@@ -38,7 +38,6 @@ public class KakaoSearchServiceImpl implements FoodSearchService {
     @Value("${kakao.rest.api.key}")
     private String kakaoRestApiKey;
     private final FoodRepository foodRepository;
-    //private final RedisTemplateService redisTemplateService;
 
     @Retryable(
             exceptionExpression = "RuntimeException.class",
