@@ -38,7 +38,12 @@ jobs:
            X_NAVER_ID: ${{secrets.X_NAVER_ID}} # env 로 직접 세팅 
            X_NAVER_CLIENT_ID: ${{secrets.X_NAVER_CLIENT_ID}} # env 로 직접 세팅 
            X_NAVER_CLIENT_SECRET: ${{secrets.X_NAVER_CLIENT_SECRET}} # env 로 직접 세팅           
-          
+           
+      - uses: actions/checkout@v3
+      - run: touch ./src/main/resources/application.yml
+      - run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
+      - run: cat ./src/main/resources/application.yml       
+      
       - name: Run chmod to make gradlew executable
         run: chmod +x ./gradlew
         
