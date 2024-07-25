@@ -1,6 +1,5 @@
 package com.lms.lomboktest.food.service;
 
-
 import com.lms.lomboktest.food.model.Food;
 import com.lms.lomboktest.food.model.dto.SearchKeywordDto;
 import com.lms.lomboktest.food.model.dto.SearchResponse;
@@ -17,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.util.List;
 
 @Service
@@ -38,13 +36,20 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
     @Override
     public SearchResponse foodSearch(String query, String sort , int page) {
 
-        // URI 생성
         UriComponentsBuilder uriBuilder = getUriComponentsBuilder(query, sort);
-        // ResponseEntity 생성
         var responseEntity = getSearchResponseResponseEntity(uriBuilder);
         SearchResponse sr = responseEntity.getBody();
-        log.info("네이버 검색 API 호출 성공");
         return sr;
+    }
+
+    @NotNull
+    private UriComponentsBuilder getUriComponentsBuilder(String query, String sort) {
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(naverLocalSearchUrl);
+        uriBuilder.queryParam("query", query);
+        uriBuilder.queryParam("display", "5");
+        uriBuilder.queryParam("start", "1");
+        uriBuilder.queryParam("sort", sort);
+        return uriBuilder;
     }
 
     @NotNull
@@ -69,16 +74,6 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
         return responseEntity;
     }
 
-    @NotNull
-    private UriComponentsBuilder getUriComponentsBuilder(String query, String sort) {
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(naverLocalSearchUrl);
-        uriBuilder.queryParam("query", query);
-        uriBuilder.queryParam("display", "5");
-        uriBuilder.queryParam("start", "1");
-        uriBuilder.queryParam("sort", sort);
-        return uriBuilder;
-    }
-
     @Override
     public List<Food> foodListWithCount(){
         /*List<Food> foodList = redisTemplateService.findAll();
@@ -92,8 +87,6 @@ public class NaverSearchServiceImpl implements FoodSearchService  {
         Food food = foodRepository.findById(query).orElse(new Food(query, 0L));
         food.increaseSearchCnt();
         log.info("음식 키워드 저장");
-
-
         return new SearchKeywordDto(foodRepository.save(food));
     }
 

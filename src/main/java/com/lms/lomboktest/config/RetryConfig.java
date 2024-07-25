@@ -12,14 +12,12 @@ public class RetryConfig {
     @Bean
     public RetryTemplate retryTemplate() {
         FixedBackOffPolicy fixedBackOffPolicy = new FixedBackOffPolicy();
-        fixedBackOffPolicy.setBackOffPeriod(1000);  //지정한 시간만큼 대기후 재시도 한다.
+        fixedBackOffPolicy.setBackOffPeriod(1000);
         SimpleRetryPolicy retryPolicy = new SimpleRetryPolicy();
-        retryPolicy.setMaxAttempts(2); //retry max count
-
+        retryPolicy.setMaxAttempts(2);
         RetryTemplate retryTemplate = new RetryTemplate();
         retryTemplate.setBackOffPolicy(fixedBackOffPolicy);
         retryTemplate.setRetryPolicy(retryPolicy);
-
         return retryTemplate;
     }
 
